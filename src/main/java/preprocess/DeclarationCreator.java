@@ -65,9 +65,7 @@ public class DeclarationCreator extends ASTVisitor {
 	public boolean visit(FieldDeclaration node) { return true; }
 
 	@Override
-	public boolean visit(ImportDeclaration node) {
-		return true;
-	}
+	public boolean visit(ImportDeclaration node) { return true; }
 
 	@Override
 	public boolean visit(MethodDeclaration node) {
