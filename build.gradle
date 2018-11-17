@@ -1,0 +1,18 @@
+plugins {
+	id 'java'
+}
+
+group 'StyleViz'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 9
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testCompile group: 'junit', name: 'junit', version: '4.12'
+	compile group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.core', version: '3.10.0'
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+}
