@@ -28,11 +28,7 @@ public class DeclarationCreator extends ASTVisitor {
 	 */
 	Declaration build(CompilationUnit unit) {
 		unit.accept(this);
-		return new Declaration( fileName,
-								classNames,
-								methodNames,
-								staticVariableNames,
-								variableNames);
+		return new Declaration(fileName, classNames, methodNames, staticVariableNames, variableNames);
 	}
 
 	/**
