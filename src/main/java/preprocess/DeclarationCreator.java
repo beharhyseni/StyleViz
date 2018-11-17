@@ -21,7 +21,7 @@ public class DeclarationCreator extends ASTVisitor {
 	}
 
 	Declaration build(CompilationUnit unit) {
-		visit(unit);
+		unit.accept(this);
 		return new Declaration( fileName,
 								classNames,
 								methodNames,
@@ -35,33 +35,25 @@ public class DeclarationCreator extends ASTVisitor {
 	}
 
 	/* ********** Visit Methods ********** */
-	// TODO: Implement required visitor methods
-
-
-	@Override
-	public boolean visit(ClassInstanceCreation node) {
-		return true;
-	}
-
-	@Override
-	public boolean visit(CompilationUnit node) {
-		return true;
-	}
 
 	@Override
 	public boolean visit(EnumConstantDeclaration node) {
+		// Enum values are treated as static variables
+		String name = node.getName().getIdentifier();
+		if (name != null) staticVariableNames.add(name);
 		return true;
 	}
 
 	@Override
 	public boolean visit(EnumDeclaration node) {
+		// Enums are treated as classes
+		String name = node.getName().getIdentifier();
+		if (name != null) classNames.add(name);
 		return true;
 	}
 
 	@Override
-	public boolean visit(FieldDeclaration node) {
-		return true;
-	}
+	public boolean visit(FieldDeclaration node) { return true; }
 
 	@Override
 	public boolean visit(ImportDeclaration node) {
@@ -70,46 +62,32 @@ public class DeclarationCreator extends ASTVisitor {
 
 	@Override
 	public boolean visit(MethodDeclaration node) {
+		String name = node.getName().getIdentifier();
+		if (name != null) methodNames.add(name);
 		return true;
 	}
 
 	@Override
-	public boolean visit(PackageDeclaration node) {
-		return true;
-	}
-
-	@Override
-	public boolean visit(SimpleName node) {
-		return true;
-	}
+	public boolean visit(PackageDeclaration node) { return true; }
 
 	@Override
 	public boolean visit(SingleVariableDeclaration node) {
+		String name = node.getName().getIdentifier();
+		if (name != null) variableNames.add(name);
 		return true;
 	}
 
 	@Override
 	public boolean visit(TypeDeclaration node) {
-		return true;
-	}
-
-	@Override
-	public boolean visit(TypeDeclarationStatement node) {
-		return true;
-	}
-
-	@Override
-	public boolean visit(VariableDeclarationExpression node) {
-		return true;
-	}
-
-	@Override
-	public boolean visit(VariableDeclarationStatement node) {
+		String name = node.getName().getIdentifier();
+		if (name != null) classNames.add(name);
 		return true;
 	}
 
 	@Override
 	public boolean visit(VariableDeclarationFragment node) {
+		String name = node.getName().getIdentifier();
+		if (name != null) variableNames.add(name);
 		return true;
 	}
 
