@@ -5,7 +5,8 @@ public enum Style {
 	CAMEL_CASE,             // e.g. someVariableName
 	SNAKE_CASE,             // e.g. some_variable_name
 	STUDLY_CAPS,            // e.g. SomeClass
-	ALL_CAPS;               // e.g. SOME_CONSTANT
+	ALL_CAPS,               // e.g. SOME_CONSTANT
+	OTHER;
 
 
 	/**
@@ -16,7 +17,7 @@ public enum Style {
 	 */
 	public static Style recognizeStyle(String identifier) {
 		// TODO: Finish Implementation
-		return ALL_CAPS; // stub
+		return OTHER; // stub
 	}
 
 }
