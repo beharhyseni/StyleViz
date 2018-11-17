@@ -13,8 +13,10 @@ import java.util.List;
 public class PreProcessor {
 
 
+	private static final String CHARSET = "UTF-8";
+
 	/**
-	 * Return a list of Declarations for each .java file in root
+	 * Return a Declaration for each .java file in root
 	 *
 	 * @param root  The root directory containing Java files
 	 * @return      A list of Declarations for each Java file in root
@@ -48,7 +50,7 @@ public class PreProcessor {
 
 		// Get source code as a String
 		String source;
-		try { source = getSource(file, "UTF-8"); }
+		try { source = getSource(file, CHARSET); }
 		catch (IOException e) { return null; }
 
 		parser.setSource(source.toCharArray());
