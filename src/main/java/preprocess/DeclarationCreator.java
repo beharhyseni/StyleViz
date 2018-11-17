@@ -20,6 +20,12 @@ public class DeclarationCreator extends ASTVisitor {
 		this.variableNames = new ArrayList<>();
 	}
 
+	/**
+	 * Return a Declaration instance corresponding to unit
+	 *
+	 * @param unit  The compilation unit
+	 * @return      A Declaration instance
+	 */
 	Declaration build(CompilationUnit unit) {
 		unit.accept(this);
 		return new Declaration( fileName,
@@ -29,6 +35,13 @@ public class DeclarationCreator extends ASTVisitor {
 								variableNames);
 	}
 
+	/**
+	 * Return a Declaration for the respective compilation unit
+	 *
+	 * @param unit          The compilation unit (root of AST)
+	 * @param fileName      The name of the .java file for given AST
+	 * @return              A Declaration instance
+	 */
 	static Declaration makeDeclaration(final CompilationUnit unit, String fileName) {
 		DeclarationCreator creator = new DeclarationCreator(fileName);
 		return creator.build(unit);

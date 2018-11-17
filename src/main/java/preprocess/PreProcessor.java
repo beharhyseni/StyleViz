@@ -13,6 +13,12 @@ import java.util.List;
 public class PreProcessor {
 
 
+	/**
+	 * Return a list of Declarations for each .java file in root
+	 *
+	 * @param root  The root directory containing Java files
+	 * @return      A list of Declarations for each Java file in root
+	 */
 	public static List<Declaration> process(String root) {
 		File[] javaFiles = getJavaFiles(root);
 
