@@ -65,11 +65,11 @@ public class JsonExctractor {
 
             }
 
-            System.out.println(getClassNames());
-            System.out.println(getClassConsistencies());
-            System.out.println(getConstantConsistencies());
-            System.out.println(getVariableConsistencies());
-            System.out.println(getMethodConsistencies());
+//            System.out.println(getClassNames());
+//            System.out.println(getClassConsistencies());
+//            System.out.println(getConstantConsistencies());
+//            System.out.println(getVariableConsistencies());
+//            System.out.println(getMethodConsistencies());
 
 
         } catch (
