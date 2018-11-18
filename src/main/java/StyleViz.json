@@ -1,0 +1,44 @@
+{
+    "Class1": {
+        "name":"PUT THIS CLASS NAME HERE",
+        "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        
+    },
+    "Class2": {
+        "name":"PUT THIS CLASS NAME HERE",
+        "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        
+    },
+    "Class3": {
+        "name":"PUT THIS CLASS NAME HERE",
+        "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        
+    },
+    "Class4": {
+        "name":"PUT THIS CLASS NAME HERE",
+        "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        
+    },
+    "Class5": {
+        "name":"PUT THIS CLASS NAME HERE",
+        "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        
+    }    
+    
+    
+}
