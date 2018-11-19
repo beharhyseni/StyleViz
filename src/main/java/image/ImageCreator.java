@@ -40,6 +40,7 @@ public class ImageCreator {
             drawStems(g, imageWidth, imageHeight);
             drawFlowers(g, imageWidth, imageHeight, numberOfClasses);
             drawStrings(g, imageWidth, imageHeight, numberOfClasses);
+            drawDescriptions(g, imageWidth, imageHeight);
 
 
             g.dispose();
@@ -50,16 +51,6 @@ public class ImageCreator {
             e.printStackTrace();
         }
 
-    }
-
-    protected void drawStems(Graphics2D g, int imageWidth, int imageHeight) {
-        // Draw stems
-        int stemWidthChange = imageWidth / 4;
-        int stemWidth = imageHeight / 96;
-        g.fillRect(imageWidth / 8, (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
-        g.fillRect(stemWidthChange + (imageWidth / 8), (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
-        g.fillRect(2 * stemWidthChange + (imageWidth / 8), (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
-        g.fillRect(3 * stemWidthChange + (imageWidth / 8), (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
     }
 
     protected void drawFlowers(Graphics2D g, int imageWidth, int imageHeight, int numberOfClasses) {
@@ -859,4 +850,33 @@ public class ImageCreator {
         g.fillRect(0, imageHeight - 80, imageWidth, imageHeight);
     }
 
+    protected void drawStems(Graphics2D g, int imageWidth, int imageHeight) {
+        // Draw stems
+        int stemWidthChange = imageWidth / 4;
+        int stemWidth = imageHeight / 96;
+        g.fillRect(imageWidth / 8, (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
+        g.fillRect(stemWidthChange + (imageWidth / 8), (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
+        g.fillRect(2 * stemWidthChange + (imageWidth / 8), (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
+        g.fillRect(3 * stemWidthChange + (imageWidth / 8), (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
+    }
+
+    protected void drawDescriptions(Graphics2D g, int imageWidth, int imageHeight) {
+        // Draw stems
+        g.setFont(new Font("Arial", Font.BOLD, 34));
+        g.setColor(Color.white);
+        int stemWidthChange = imageWidth / 4;
+        int stemWidth = imageHeight / 96;
+        int height = imageHeight - 40;
+
+        // ClassNames
+        g.drawString("ClassName", imageWidth / 13, height);
+        // CONSTANTS
+        g.drawString("CONSTANT", imageWidth / 3, height);
+        // globalAndLocalVariables
+        g.drawString("globalAndLocalVariable", imageWidth / 2 + 45, height);
+        // methodNames
+        g.drawString("methodName", imageWidth - imageWidth / 6 - stemWidth, height);
+
+
+    }
 }
