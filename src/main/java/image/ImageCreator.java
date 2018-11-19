@@ -146,6 +146,42 @@ public class ImageCreator {
         g.fillOval(positionWidth, circleYPos, diameter, diameter);
 
 
+        // DRAW THE CIRCLES FOR THE SECOND FLOWER
+
+        g.setColor(new Color(170, 0, 0));
+
+        // DRAW TOP VERTICAL CIRCLE
+        diameter = 120;
+        circleYPos = imageHeight / 5 + (100 - diameter);
+        positionWidth = stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
+        g.fillOval(positionWidth, circleYPos, diameter, diameter);
+
+        // DRAW TOP RIGHT CIRCLE
+        diameter = 120;
+        circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
+        positionWidth = stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
+        g.fillOval(positionWidth, circleYPos, diameter, diameter);
+
+        // DRAW TOP LEFT CIRCLE
+        diameter = 120;
+        circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
+        positionWidth = stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
+        g.fillOval(positionWidth, circleYPos, diameter, diameter);
+
+        // DRAW BOTTOM LEFT CIRCLE
+        diameter = 120;
+        circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
+        positionWidth = stemWidthChange + (imageWidth / 8 - angledLineDifference) - diameter / 2;
+        g.fillOval(positionWidth, circleYPos, diameter, diameter);
+
+
+        // DRAW BOTTOM RIGHT CIRCLE
+        diameter = 120;
+        circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
+        positionWidth = stemWidthChange + (imageWidth / 8 + angledLineDifference) - diameter / 2;
+        g.fillOval(positionWidth, circleYPos, diameter, diameter);
+
+
         g.dispose();
 
         return tmp;
