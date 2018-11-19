@@ -41,6 +41,8 @@ public class ImageCreator {
             drawFlowers(g, imageWidth, imageHeight, numberOfClasses);
             drawStrings(g, imageWidth, imageHeight, numberOfClasses);
             drawDescriptions(g, imageWidth, imageHeight);
+            drawClassRectangle(g, imageWidth, imageHeight);
+            drawClassLegend(g, imageWidth, imageHeight);
 
 
             g.dispose();
@@ -866,7 +868,7 @@ public class ImageCreator {
         g.setColor(Color.white);
         int stemWidthChange = imageWidth / 4;
         int stemWidth = imageHeight / 96;
-        int height = imageHeight - 40;
+        int height = imageHeight - 30;
 
         // ClassNames
         g.drawString("ClassName", imageWidth / 13, height);
@@ -876,6 +878,36 @@ public class ImageCreator {
         g.drawString("globalAndLocalVariable", imageWidth / 2 + 45, height);
         // methodNames
         g.drawString("methodName", imageWidth - imageWidth / 6 - stemWidth, height);
+    }
+
+    protected void drawClassLegend(Graphics2D g, int imageWidth, int imageHeight) {
+        java.util.List<String> classNames = jsonExctractor.getClassNames();
+        // Draw stems
+        g.setFont(new Font("Arial", Font.BOLD, 23));
+        g.setColor(Color.BLACK);
+        int stemWidthChange = imageWidth / 4;
+        int stemWidth = imageHeight / 96;
+        int height = imageHeight / 2 + imageHeight / 3 + 8;
+
+        g.drawString("Names of the visualized classes", stemWidthChange + (imageWidth / 7) + 30, height - 30);
+        g.setFont(new Font("Arial", Font.BOLD, 19));
+        for (int i = 0; i < classNames.size(); i++) {
+            g.drawString("Class " + (i + 1) + " : " + classNames.get(i), stemWidthChange + (imageWidth / 7) - stemWidth, height);
+            height += 20;
+        }
+
+        // DRAW TITLE
+        g.setFont(new Font("Arial", Font.BOLD, 45));
+        g.drawString("Style Visualization: " + classNames.size() + " Classes", imageWidth / 3 + 20, imageHeight / 20);
+
+    }
+
+    protected void drawClassRectangle(Graphics2D g, int imageWidth, int imageHeight) {
+        int stemWidthChange = imageWidth / 4;
+        int stemWidth = imageHeight / 96;
+        int height = imageHeight / 2 + imageHeight / 3;
+        g.setColor(new Color(182, 183, 168));
+        g.fillRect(stemWidthChange + (imageWidth / 7) - stemWidth - 5, height - 13, imageWidth / 4 - 25, imageHeight / 10);
 
 
     }
