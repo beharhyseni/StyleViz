@@ -746,13 +746,17 @@ public class ImageCreator {
                 positionWidth = imageWidth / 8 - angledLineDifference;
                 positionHeight = (int) (imageHeight / (2.5) - lineLength + 30);
                 // First Flower
-                g.drawString("Class 2", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString("Class 2", positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
+                g.drawString(jsonExctractor.getClassConsistencies().get(1) + "% ", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
                 // Second Flower
-                g.drawString("Class 2", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString("Class 2", stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
+                g.drawString(jsonExctractor.getConstantConsistencies().get(1) + "% ", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
                 // Third Flower
-                g.drawString("Class 2", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString("Class 2", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
+                g.drawString(jsonExctractor.getVariableConsistencies().get(1) + "% ", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
                 // Fourth Flower
-                g.drawString("Class 2", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString("Class 2", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
+                g.drawString(jsonExctractor.getMethodConsistencies().get(1) + "% ", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
 
                 positionHeight = imageHeight / 5 + 100;
                 positionWidth = imageWidth / 8 + stemWidth / 2;
@@ -777,13 +781,13 @@ public class ImageCreator {
                 g.drawString(jsonExctractor.getClassConsistencies().get(3) + "% ", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
                 // Second Flower
                 g.drawString("Class 4", stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
-                g.drawString(jsonExctractor.getConstantConsistencies().get(3) + "% ", stemWidthChange + stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString(jsonExctractor.getConstantConsistencies().get(3) + "% ", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
                 // Third Flower
                 g.drawString("Class 4", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
-                g.drawString(jsonExctractor.getVariableConsistencies().get(3) + "% ", 2 * stemWidthChange + stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString(jsonExctractor.getVariableConsistencies().get(3) + "% ", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
                 // Fourth Flower
                 g.drawString("Class 4", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
-                g.drawString(jsonExctractor.getMethodConsistencies().get(3) + "% ", 3 * stemWidthChange + stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString(jsonExctractor.getMethodConsistencies().get(3) + "% ", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
 
                 // BOTTOM RIGHT TEXT
                 positionWidth = imageWidth / 8 + angledLineDifference;
