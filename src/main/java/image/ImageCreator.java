@@ -39,7 +39,8 @@ public class ImageCreator {
             drawBottomRectangle(g, imageWidth, imageHeight);
             drawStems(g, imageWidth, imageHeight);
             drawFlowers(g, imageWidth, imageHeight, numberOfClasses);
-            drawStrings(g, imageWidth, imageHeight);
+            drawStrings(g, imageWidth, imageHeight, numberOfClasses);
+
 
             g.dispose();
 
@@ -224,6 +225,7 @@ public class ImageCreator {
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
+
 
                 // Second Circle
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(0)) + circleCorrection;
@@ -581,11 +583,152 @@ public class ImageCreator {
 
     }
 
-    protected void drawStrings(Graphics2D g, int imageWidth, int imageHeight) {
-        int stemWidthChange = imageWidth / 4;
-        int stemWidth = imageHeight / 96;
+    protected void drawStrings(Graphics2D g, int imageWidth, int imageHeight, int numberOfClasses) {
         int lineLength = 135;
         int angledLineDifference = 140;
+        int stemWidthChange = imageWidth / 4;
+        int stemWidth = imageHeight / 96;
+        int positionHeight = imageHeight / 5 + 100;
+        int positionWidth = imageWidth / 8 + stemWidth / 2;
+        int widthCorrection = 50;
+        int heightCorrection = 130;
+
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+
+
+        switch (numberOfClasses) {
+            case 1:
+
+                // First Flower
+                g.drawString("Class 1", positionWidth - widthCorrection, positionHeight - heightCorrection);
+                // Second Flower
+                g.drawString("Class 1", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
+                // Third Flower
+                g.drawString("Class 1", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
+                // Fourth Flower
+                g.drawString("Class 1", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
+
+                break;
+            case 2:
+                positionWidth = imageWidth / 8 - angledLineDifference;
+                positionHeight = (int) (imageHeight / (2.5) - lineLength + 30);
+                // TOP LEFT TEXT
+                // First Flower
+                g.drawString("Class 1", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Second Flower
+                g.drawString("Class 1", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Third Flower
+                g.drawString("Class 1", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Fourth Flower
+                g.drawString("Class 1", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+
+                positionWidth = imageWidth / 8 + angledLineDifference;
+                positionHeight = (int) (imageHeight / (2.5) - lineLength + 30);
+                // TOP RIGHT TEXT
+                // First Flower
+                g.drawString("Class 2", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Second Flower
+                g.drawString("Class 2", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Third Flower
+                g.drawString("Class 2", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Fourth Flower
+                g.drawString("Class 2", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                break;
+            case 3:
+                positionWidth = imageWidth / 8 - angledLineDifference;
+                positionHeight = (int) (imageHeight / (2.5) - lineLength + 30);
+                // TOP LEFT TEXT
+                // First Flower
+                g.drawString("Class 1", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Second Flower
+                g.drawString("Class 1", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Third Flower
+                g.drawString("Class 1", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Fourth Flower
+                g.drawString("Class 1", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+
+                // TOP VERTICAL TEXT
+                positionHeight = imageHeight / 5 + 100;
+                positionWidth = imageWidth / 8 + stemWidth / 2;
+                // First Flower
+                g.drawString("Class 2", positionWidth - widthCorrection, positionHeight - heightCorrection);
+                // Second Flower
+                g.drawString("Class 2", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
+                // Third Flower
+                g.drawString("Class 2", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
+                // Fourth Flower
+                g.drawString("Class 2", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
+
+                positionWidth = imageWidth / 8 + angledLineDifference;
+                positionHeight = (int) (imageHeight / (2.5) - lineLength + 30);
+                // TOP RIGHT TEXT
+                // First Flower
+                g.drawString("Class 3", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Second Flower
+                g.drawString("Class 3", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Third Flower
+                g.drawString("Class 3", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Fourth Flower
+                g.drawString("Class 3", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                break;
+            case 4:
+                // BOTTOM LEFT TEXT
+                positionWidth = imageWidth / 8 - angledLineDifference;
+                positionHeight = (int) (imageHeight / (2.5) - lineLength + 2.7 * angledLineDifference);
+                // First Flower
+                g.drawString("Class 1", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Second Flower
+                g.drawString("Class 1", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Third Flower
+                g.drawString("Class 1", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Fourth Flower
+                g.drawString("Class 1", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+
+                // TOP LEFT TEXT
+                positionWidth = imageWidth / 8 - angledLineDifference;
+                positionHeight = (int) (imageHeight / (2.5) - lineLength + 30);
+                // First Flower
+                g.drawString("Class 2", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Second Flower
+                g.drawString("Class 2", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Third Flower
+                g.drawString("Class 2", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Fourth Flower
+                g.drawString("Class 2", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+
+                // TOP RIGHT TEXT
+                positionWidth = imageWidth / 8 + angledLineDifference;
+                positionHeight = (int) (imageHeight / (2.5) - lineLength + 30);
+                // First Flower
+                g.drawString("Class 3", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Second Flower
+                g.drawString("Class 3", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Third Flower
+                g.drawString("Class 3", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Fourth Flower
+                g.drawString("Class 3", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+
+                // BOTTOM RIGHT TEXT
+                positionWidth = imageWidth / 8 + angledLineDifference;
+                positionHeight = (int) (imageHeight / (2.5) - lineLength + 2.7 * angledLineDifference);
+                // First Flower
+                g.drawString("Class 4", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Second Flower
+                g.drawString("Class 4", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Third Flower
+                g.drawString("Class 4", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                // Fourth Flower
+                g.drawString("Class 4", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+
+                break;
+
+            case 5:
+                break;
+            default:
+                break;
+        }
+
     }
 
     protected void drawBottomRectangle(Graphics2D g, int imageWidth, int imageHeight) {
