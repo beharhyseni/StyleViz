@@ -757,42 +757,49 @@ public class ImageCreator {
                 positionHeight = imageHeight / 5 + 100;
                 positionWidth = imageWidth / 8 + stemWidth / 2;
                 // First Flower
-                g.drawString("Class 3", positionWidth - widthCorrection, positionHeight - heightCorrection);
-
+                g.drawString("Class 3", positionWidth - widthCorrection, positionHeight - (heightCorrection + heightCorrection / 4));
+                g.drawString(jsonExctractor.getClassConsistencies().get(2) + "% ", positionWidth - widthCorrection, positionHeight - heightCorrection);
                 // Second Flower
-                g.drawString("Class 3", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
+                g.drawString("Class 3", stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection + heightCorrection / 4));
+                g.drawString(jsonExctractor.getConstantConsistencies().get(2) + "% ", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
                 // Third Flower
-                g.drawString("Class 3", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
+                g.drawString("Class 3", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection + heightCorrection / 4));
+                g.drawString(jsonExctractor.getVariableConsistencies().get(2) + "% ", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
                 // Fourth Flower
-                g.drawString("Class 3", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
+                g.drawString("Class 3", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection + heightCorrection / 4));
+                g.drawString(jsonExctractor.getMethodConsistencies().get(2) + "% ", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection);
 
                 // TOP RIGHT TEXT
                 positionWidth = imageWidth / 8 + angledLineDifference;
                 positionHeight = (int) (imageHeight / (2.5) - lineLength + 30);
                 // First Flower
-                g.drawString("Class 4", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString("Class 4", positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
+                g.drawString(jsonExctractor.getClassConsistencies().get(3) + "% ", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
                 // Second Flower
-                g.drawString("Class 4", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString("Class 4", stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
+                g.drawString(jsonExctractor.getConstantConsistencies().get(3) + "% ", stemWidthChange + stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
                 // Third Flower
-                g.drawString("Class 4", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString("Class 4", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
+                g.drawString(jsonExctractor.getVariableConsistencies().get(3) + "% ", 2 * stemWidthChange + stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
                 // Fourth Flower
-                g.drawString("Class 4", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
+                g.drawString("Class 4", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - (heightCorrection - heightCorrection / 4));
+                g.drawString(jsonExctractor.getMethodConsistencies().get(3) + "% ", 3 * stemWidthChange + stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
 
                 // BOTTOM RIGHT TEXT
                 positionWidth = imageWidth / 8 + angledLineDifference;
                 positionHeight = (int) (imageHeight / (2.5) - lineLength + 2.7 * angledLineDifference);
                 // First Flower
                 g.drawString("Class 5", positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
-                g.drawString(jsonExctractor.getClassConsistencies().get(0) + "% ", positionWidth - widthCorrection, positionHeight - heightCorrection / 4);
+                g.drawString(jsonExctractor.getClassConsistencies().get(4) + "% ", positionWidth - widthCorrection, positionHeight - heightCorrection / 4);
                 // Second Flower
                 g.drawString("Class 5", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
-                g.drawString(jsonExctractor.getConstantConsistencies().get(0) + "% ", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 4);
+                g.drawString(jsonExctractor.getConstantConsistencies().get(4) + "% ", stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 4);
                 // Third Flower
                 g.drawString("Class 5", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
-                g.drawString(jsonExctractor.getVariableConsistencies().get(0) + "% ", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 4);
+                g.drawString(jsonExctractor.getVariableConsistencies().get(4) + "% ", 2 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 4);
                 // Fourth Flower
                 g.drawString("Class 5", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 2);
-                g.drawString(jsonExctractor.getMethodConsistencies().get(0) + "% ", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 4);
+                g.drawString(jsonExctractor.getMethodConsistencies().get(4) + "% ", 3 * stemWidthChange + positionWidth - widthCorrection, positionHeight - heightCorrection / 4);
 
                 break;
             default:
