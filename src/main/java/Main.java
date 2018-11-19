@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         JsonExctractor jsonExctractor = new JsonExctractor();
         jsonExctractor.parse("test.json");
-        ImageCreator imageCreator = new ImageCreator();
+        ImageCreator imageCreator = new ImageCreator(jsonExctractor);
         imageCreator.drawImage();
 
 
