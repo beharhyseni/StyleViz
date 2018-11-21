@@ -24,7 +24,7 @@ public abstract class DeclarationProcessor {
             checkVariableName(d.getVariableNames());
         }
     }
-    public void checkAgainstDictionary(String word) {
+    public void isInDictionary(String word) {
         // TODO call API
     }
 
