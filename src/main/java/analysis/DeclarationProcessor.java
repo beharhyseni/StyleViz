@@ -1,7 +1,11 @@
 package analysis;
 
+import analysis.provider.AbstractHttpDataProvider;
+import analysis.provider.DataProvider;
+import analysis.provider.HttpDictionaryDataProvider;
 import preprocess.Declaration;
 
+import java.io.IOException;
 import java.util.List;
 
 public abstract class DeclarationProcessor {
@@ -24,8 +28,16 @@ public abstract class DeclarationProcessor {
             checkVariableName(d.getVariableNames());
         }
     }
-    public void isInDictionary(String word) {
+    public boolean isInDictionary(String word) {
         // TODO call API
+        DataProvider wordFinder = new HttpDictionaryDataProvider(word);
+        try {
+            String response = wordFinder.dataSourceToString();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public abstract void checkClassName(List<String> classNames);
