@@ -3,21 +3,33 @@ package preprocess;
 import org.eclipse.jdt.core.dom.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DeclarationCreator extends ASTVisitor {
+
+	enum Type {
+		STATIC,
+		VARIABLE,
+	}
+	private Type type = Type.VARIABLE;
+
+
 	private String fileName;
 	private List<String> classNames;
 	private List<String> methodNames;
 	private List<String> staticVariableNames;
 	private List<String> variableNames;
+	private Map<String, Integer> frequencyMap;
 
-	DeclarationCreator(String fileName) {
+	private DeclarationCreator(String fileName) {
 		this.fileName = fileName;
 		this.classNames = new ArrayList<>();
 		this.methodNames = new ArrayList<>();
 		this.staticVariableNames = new ArrayList<>();
 		this.variableNames = new ArrayList<>();
+		this.frequencyMap = new HashMap<>();
 	}
 
 	/**
@@ -26,9 +38,14 @@ public class DeclarationCreator extends ASTVisitor {
 	 * @param unit  The compilation unit
 	 * @return      A Declaration instance
 	 */
-	Declaration build(CompilationUnit unit) {
+	private Declaration build(CompilationUnit unit) {
 		unit.accept(this);
-		return new Declaration(fileName, classNames, methodNames, staticVariableNames, variableNames);
+		return new Declaration(fileName,
+				               classNames,
+				               methodNames,
+				               staticVariableNames,
+				               variableNames,
+				               frequencyMap);
 	}
 
 	/**
@@ -43,58 +60,77 @@ public class DeclarationCreator extends ASTVisitor {
 		return creator.build(unit);
 	}
 
+
+	private void updateList(List<String> container, String name) {
+		int count = frequencyMap.getOrDefault(name, 0);
+		if (count == 0) {
+			frequencyMap.put(name, 1);
+			container.add(name);
+		}
+		else {
+			frequencyMap.put(name, count + 1);
+		}
+	}
+
+
 	/* ********** Visit Methods ********** */
 
 	@Override
 	public boolean visit(EnumConstantDeclaration node) {
 		// Enum values are treated as static variables
-		String name = node.getName().getIdentifier();
-		if (name != null) staticVariableNames.add(name);
+		updateList(staticVariableNames, node.getName().getIdentifier());
 		return true;
 	}
 
 	@Override
 	public boolean visit(EnumDeclaration node) {
 		// Enums are treated as classes
-		String name = node.getName().getIdentifier();
-		if (name != null) classNames.add(name);
+		updateList(classNames, node.getName().getIdentifier());
 		return true;
 	}
 
 	@Override
-	public boolean visit(FieldDeclaration node) { return true; }
-
-	@Override
-	public boolean visit(ImportDeclaration node) { return true; }
+	public boolean visit(FieldDeclaration node) {
+		for (Object o : node.modifiers()) {
+			Modifier m = (Modifier) o;
+			if (m.isStatic()) {
+				type = Type.STATIC;
+				return true;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		String name = node.getName().getIdentifier();
-		if (name != null) methodNames.add(name);
-		return true;
-	}
-
-	@Override
-	public boolean visit(PackageDeclaration node) { return true; }
-
-	@Override
-	public boolean visit(SingleVariableDeclaration node) {
-		String name = node.getName().getIdentifier();
-		if (name != null) variableNames.add(name);
+		updateList(methodNames, node.getName().getIdentifier());
 		return true;
 	}
 
 	@Override
 	public boolean visit(TypeDeclaration node) {
-		String name = node.getName().getIdentifier();
-		if (name != null) classNames.add(name);
+		updateList(classNames, node.getName().getIdentifier());
+		return true;
+	}
+
+	@Override
+	public boolean visit(SingleVariableDeclaration node) {
+		updateList(variableNames, node.getName().getIdentifier());
 		return true;
 	}
 
 	@Override
 	public boolean visit(VariableDeclarationFragment node) {
 		String name = node.getName().getIdentifier();
-		if (name != null) variableNames.add(name);
+		switch (type) {
+			case STATIC:
+				updateList(staticVariableNames, name);
+				break;
+			case VARIABLE:
+				updateList(variableNames, name);
+				break;
+		}
+		type = Type.VARIABLE;
 		return true;
 	}
 

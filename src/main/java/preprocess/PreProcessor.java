@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PreProcessor {
@@ -23,6 +24,7 @@ public class PreProcessor {
 	 */
 	public static List<Declaration> process(String root) {
 		File[] javaFiles = getJavaFiles(root);
+		if (javaFiles == null) return Collections.emptyList();
 
 		// Setup AST Parser
 		ASTParser parser = ASTParser.newParser(AST.JLS8);
