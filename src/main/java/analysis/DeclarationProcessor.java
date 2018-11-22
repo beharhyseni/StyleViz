@@ -20,8 +20,9 @@ public abstract class DeclarationProcessor {
     public DeclarationProcessor() { }
 
     public void processDeclaration(List<Declaration> declarations){
+        String fileName = "";
         for (Declaration d : declarations){
-            // TODO d.getFileName map
+            fileName = d.getFileName();
             checkClassName(d.getClassNames());
             checkMethodName(d.getMethodNames());
             checkStaticVariableName(d.getStaticVariableNames());
@@ -29,15 +30,21 @@ public abstract class DeclarationProcessor {
         }
     }
     public boolean isInDictionary(String word) {
-        // TODO call API
+
+        boolean inDictionary = false;
         DataProvider wordFinder = new HttpDictionaryDataProvider(word);
         try {
             String response = wordFinder.dataSourceToString();
+            if (response.startsWith("[{")) {
+                inDictionary = true;
+            } else {
+                inDictionary = false;
+            }
             
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return true;
+        return inDictionary;
     }
 
     public abstract void checkClassName(List<String> classNames);
