@@ -1,6 +1,10 @@
 import analysis.CamelDeclarationIdentifier;
 import analysis.DeclarationProcessor;
 import analysis.SnakeDeclarationIdentifier;
+import analysis.provider.DataProvider;
+import analysis.provider.HttpDictionaryDataProvider;
+import analysis.writer.FileGenerator;
+import org.json.simple.JSONObject;
 import preprocess.Declaration;
 import preprocess.PreProcessor;
 
@@ -13,10 +17,21 @@ public class StyleViz {
 
         PreProcessor preProcessor = new PreProcessor();
         List<Declaration> declarations = preProcessor.process("");
+
+        System.out.println("Pre-process complete.");
+
         DeclarationProcessor camel = new CamelDeclarationIdentifier();
-        camel.processDeclaration(declarations); // TODO output list of JSON object
+        camel.processDeclaration(declarations);
         DeclarationProcessor snake = new SnakeDeclarationIdentifier();
-        snake.processDeclaration(declarations); // TODO output list of JSON object
+        snake.processDeclaration(declarations);
+
+        System.out.println("Data analysis complete.");
+
+//        FileGenerator fileGenerator = new FileGenerator();
+//        fileGenerator.processJSONObject(CamelDeclarationIdentifier.camelJSON);
+//        fileGenerator.processJSONObject(SnakeDeclarationIdentifier.snakeJSON);
+//
+//        System.out.println("JSON FILES GENERATED.");
 
     }
 }
