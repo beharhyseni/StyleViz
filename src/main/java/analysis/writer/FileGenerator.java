@@ -32,10 +32,11 @@ public class FileGenerator {
         FileWriter writer;
 
         try {
-
+            System.out.println("Start Writing " + fileName);
             writer = new FileWriter(jsonFile);
             writer.write(jsonObject.toJSONString());
             writer.close();
+            System.out.println("Finish Writing " + fileName);
 
         } catch (IOException e) {
             e.printStackTrace();
