@@ -3,9 +3,7 @@ package preprocess;
 import org.eclipse.jdt.core.dom.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DeclarationCreator extends ASTVisitor {
 
@@ -21,7 +19,6 @@ public class DeclarationCreator extends ASTVisitor {
 	private List<String> methodNames;
 	private List<String> staticVariableNames;
 	private List<String> variableNames;
-	private Map<String, Integer> frequencyMap;
 
 	private DeclarationCreator(String fileName) {
 		this.fileName = fileName;
@@ -29,7 +26,6 @@ public class DeclarationCreator extends ASTVisitor {
 		this.methodNames = new ArrayList<>();
 		this.staticVariableNames = new ArrayList<>();
 		this.variableNames = new ArrayList<>();
-		this.frequencyMap = new HashMap<>();
 	}
 
 	/**
@@ -44,8 +40,7 @@ public class DeclarationCreator extends ASTVisitor {
 				               classNames,
 				               methodNames,
 				               staticVariableNames,
-				               variableNames,
-				               frequencyMap);
+				               variableNames);
 	}
 
 	/**
@@ -61,31 +56,20 @@ public class DeclarationCreator extends ASTVisitor {
 	}
 
 
-	private void updateList(List<String> container, String name) {
-		int count = frequencyMap.getOrDefault(name, 0);
-		if (count == 0) {
-			frequencyMap.put(name, 1);
-			container.add(name);
-		}
-		else {
-			frequencyMap.put(name, count + 1);
-		}
-	}
-
 
 	/* ********** Visit Methods ********** */
 
 	@Override
 	public boolean visit(EnumConstantDeclaration node) {
 		// Enum values are treated as static variables
-		updateList(staticVariableNames, node.getName().getIdentifier());
+		staticVariableNames.add(node.getName().getIdentifier());
 		return true;
 	}
 
 	@Override
 	public boolean visit(EnumDeclaration node) {
 		// Enums are treated as classes
-		updateList(classNames, node.getName().getIdentifier());
+		classNames.add(node.getName().getIdentifier());
 		return true;
 	}
 
@@ -103,19 +87,19 @@ public class DeclarationCreator extends ASTVisitor {
 
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		updateList(methodNames, node.getName().getIdentifier());
+		methodNames.add(node.getName().getIdentifier());
 		return true;
 	}
 
 	@Override
 	public boolean visit(TypeDeclaration node) {
-		updateList(classNames, node.getName().getIdentifier());
+		classNames.add(node.getName().getIdentifier());
 		return true;
 	}
 
 	@Override
 	public boolean visit(SingleVariableDeclaration node) {
-		updateList(variableNames, node.getName().getIdentifier());
+		variableNames.add(node.getName().getIdentifier());
 		return true;
 	}
 
@@ -124,10 +108,10 @@ public class DeclarationCreator extends ASTVisitor {
 		String name = node.getName().getIdentifier();
 		switch (type) {
 			case STATIC:
-				updateList(staticVariableNames, name);
+				staticVariableNames.add(name);
 				break;
 			case VARIABLE:
-				updateList(variableNames, name);
+				variableNames.add(name);
 				break;
 		}
 		type = Type.VARIABLE;
