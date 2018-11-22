@@ -60,13 +60,13 @@ public class FileGenerator {
             if(whileLoopTracker <= 5) { // limit to five
                 JSONObject jsonObject = new JSONObject();
                 for(int i = 0 ; i < loopTracker ; i++){
-                    if(loopTracker > keys.length) {
-                        whileLoopTracker = 6;
+                    if(loopTracker > keys.length) { // check if we reach the end of the JSON object
+                        whileLoopTracker = 6; // this is to break the while
                         break;
                     }else{
-                        jsonObject.put(keys[i], jsonObjectBase.get(keys[i]));
+                        jsonObject.put(keys[i], jsonObjectBase.get(keys[i])); // push each key, value pair
                         if(!hasCheckedBefore) checkIfItIsSnake((JSONObject) jsonObjectBase.get(keys[i]));
-                        writeToFiles(jsonObject, String.valueOf(loopTracker));
+                        writeToFiles(jsonObject, String.valueOf(loopTracker)); // write to JSON files
                     }
                 }
 
