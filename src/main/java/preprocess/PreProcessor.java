@@ -23,7 +23,7 @@ public class PreProcessor {
 	 * @return      A list of Declarations for each Java file in root
 	 */
 	public static List<Declaration> process(String root) {
-		File[] javaFiles = getJavaFiles(root);
+		List<File> javaFiles = getJavaFiles(root);
 		if (javaFiles == null) return Collections.emptyList();
 
 		// Setup AST Parser
@@ -70,9 +70,21 @@ public class PreProcessor {
 	 * @param root  The root directory
 	 * @return      All files ending with .java (i.e. all java files)
 	 */
-	private static File[] getJavaFiles(String root) {
+	private static List<File> getJavaFiles(String root) {
 		File dir = new File(root);
-		return dir.listFiles((dir1, name) -> name.endsWith(".java"));
+		List<File> result = new ArrayList<>();
+		File[] subFiles = dir.listFiles();
+		if (subFiles == null) return result;
+
+		for (File file : subFiles) {
+			if (file.isDirectory()) {
+				result.addAll(getJavaFiles(file.getAbsolutePath()));
+			}
+			else if (file.getName().endsWith(".java")) {
+				result.add(file);
+			}
+		}
+		return result;
 	}
 
 

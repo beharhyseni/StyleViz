@@ -14,7 +14,7 @@ public class PreProcessorTest {
 
 	@Test
 	public void testProcess() {
-		List<Declaration> declarations = PreProcessor.process("src/test/resources/");
+		List<Declaration> declarations = PreProcessor.process("src/test/resources");
 		assertNotNull(declarations);
 		assertFalse(declarations.isEmpty());
 		assertEquals(1, declarations.size());
