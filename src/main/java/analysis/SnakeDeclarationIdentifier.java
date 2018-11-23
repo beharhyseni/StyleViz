@@ -1,12 +1,14 @@
 package analysis;
+package json;
 
+import org.json.simple.JSONObject;
 import preprocess.Declaration;
 
 import java.util.List;
 
 public class SnakeDeclarationIdentifier extends DeclarationProcessor {
 
-    private List<Declaration> declarations;
+    JSONObject snakeJSON = new JSONObject();
     private boolean snakeCase = true;
 
     private List<String> goodClassNames;
@@ -24,6 +26,7 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
     @Override
     public void checkClassName(List<String> classNames) {
         //TODO
+
     }
 
     @Override
