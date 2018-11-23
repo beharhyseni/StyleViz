@@ -1,10 +1,15 @@
 package analysis;
 
+import org.json.simple.JSONObject;
 import preprocess.Declaration;
 
 import java.util.List;
 
 public class SnakeDeclarationIdentifier extends DeclarationProcessor {
+
+    public static JSONObject snakeJSON = new JSONObject();
+
+    public static int currentClass;
 
     private List<Declaration> declarations;
     private boolean snakeCase = true;
@@ -20,7 +25,12 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
 
     public SnakeDeclarationIdentifier() { }
 
+    @Override
+    public void initializeJSON(int classIterator) {
 
+        snakeJSON.put("Class"+Integer.toString(classIterator), "");
+        //SnakeDeclarationIdentifier.snakeJSON.put("Class"+Integer.toString(classIterator), "");
+    }
     @Override
     public void checkClassName(List<String> classNames) {
         //TODO
