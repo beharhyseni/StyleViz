@@ -20,6 +20,7 @@ public class JsonExctractor {
     private List<String> variableConsistencies;
     private List<String> methodConsistencies;
     private List<String> classConsistencies;
+    private List<Boolean> styleCases;
 
 
     public JsonExctractor() {
@@ -28,6 +29,7 @@ public class JsonExctractor {
         variableConsistencies = new ArrayList<>();
         methodConsistencies = new ArrayList<>();
         classConsistencies = new ArrayList<>();
+        styleCases = new ArrayList<>();
 
     }
 
@@ -62,6 +64,7 @@ public class JsonExctractor {
                 addVariablePercentage(jObj.get("variable-consistency").toString());
                 addMethodPercentage(jObj.get("method-consistency").toString());
                 addClassPercentage(jObj.get("class-consistency").toString());
+                addGetStyleCase((Boolean) jObj.get("Snake_Case"));
 
             }
 
@@ -126,5 +129,12 @@ public class JsonExctractor {
         classConsistencies.add(classP);
     }
 
+    public List<Boolean> getStyleCases() {
+        return styleCases;
+    }
+
+    public void addGetStyleCase(Boolean style) {
+        styleCases.add(style);
+    }
 
 }

@@ -4,7 +4,8 @@
         "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
-        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE",  
+        "Snake_Case":false
         
     },
     "Class2": {
@@ -12,7 +13,8 @@
         "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
-        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE",     
+        "Snake_Case":false
         
     },
     "Class3": {
@@ -20,7 +22,9 @@
         "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
-        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE",
+        "Snake_Case":false
+        
         
     },
     "Class4": {
@@ -28,7 +32,9 @@
         "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
-        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE",
+        "Snake_Case":false
+        
         
     },
     "Class5": {
@@ -36,7 +42,9 @@
         "class-consistency":"PUT CLASS NAME CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "constant-consistency": "PUT CONSTANTS CONSISTENCY PERCENTAGE FOR THIS CLASS",
         "variable-consistency": "PUT VARIABLE, LOCAL AND GLOBAL, CONSISTENCY PERCENTAGE FOR THIS CLASS",
-        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE"      
+        "method-consistency":"PUT METHODS CONSISTENCY PERCENTAGE HERE",
+        "Snake_Case":false
+    
         
     }    
     
