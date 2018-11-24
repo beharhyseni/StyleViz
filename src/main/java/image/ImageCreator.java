@@ -40,7 +40,13 @@ public class ImageCreator {
             drawStems(g, imageWidth, imageHeight);
             drawFlowers(g, imageWidth, imageHeight, numberOfClasses);
             drawStrings(g, imageWidth, imageHeight, numberOfClasses);
-            drawDescriptions(g, imageWidth, imageHeight);
+
+            if (jsonExctractor.getStyleCases().get(0)) {
+                drawDescriptionsSnakeCase(g, imageWidth, imageHeight);
+            } else {
+                drawDescriptionsCamelCase(g, imageWidth, imageHeight);
+            }
+
             drawClassRectangle(g, imageWidth, imageHeight);
             drawClassLegend(g, imageWidth, imageHeight);
 
@@ -862,7 +868,7 @@ public class ImageCreator {
         g.fillRect(3 * stemWidthChange + (imageWidth / 8), (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
     }
 
-    protected void drawDescriptions(Graphics2D g, int imageWidth, int imageHeight) {
+    protected void drawDescriptionsCamelCase(Graphics2D g, int imageWidth, int imageHeight) {
         // Draw stems
         g.setFont(new Font("Arial", Font.BOLD, 34));
         g.setColor(Color.white);
@@ -878,6 +884,24 @@ public class ImageCreator {
         g.drawString("globalAndLocalVariable", imageWidth / 2 + 45, height);
         // methodNames
         g.drawString("methodName", imageWidth - imageWidth / 6 - stemWidth, height);
+    }
+
+    protected void drawDescriptionsSnakeCase(Graphics2D g, int imageWidth, int imageHeight) {
+        // Draw stems
+        g.setFont(new Font("Arial", Font.BOLD, 34));
+        g.setColor(Color.white);
+        int stemWidthChange = imageWidth / 4;
+        int stemWidth = imageHeight / 96;
+        int height = imageHeight - 30;
+
+        // ClassNames
+        g.drawString("Class_name", imageWidth / 13, height);
+        // CONSTANTS
+        g.drawString("CONSTANT_DEC", imageWidth / 3 - 45, height);
+        // globalAndLocalVariables
+        g.drawString("global_and_local_variable", imageWidth / 2 + 45, height);
+        // methodNames
+        g.drawString("method_name", imageWidth - imageWidth / 6 - stemWidth, height);
     }
 
     protected void drawClassLegend(Graphics2D g, int imageWidth, int imageHeight) {
@@ -900,6 +924,14 @@ public class ImageCreator {
         g.setFont(new Font("Arial", Font.BOLD, 45));
         g.drawString("Style Visualization: " + classNames.size() + " Classes", imageWidth / 3 + 20, imageHeight / 20);
 
+        if (jsonExctractor.getStyleCases().get(0)) {
+            g.setFont(new Font("Arial", Font.BOLD, 25));
+            g.drawString("Testing consistency for the Snake_case style", imageWidth / 3 + 60, imageHeight / 20 + 30);
+        } else {
+            g.setFont(new Font("Arial", Font.BOLD, 25));
+            g.drawString("Testing consistency for the CamelCase style", imageWidth / 3 + 60, imageHeight / 20 + 30);
+
+        }
     }
 
     protected void drawClassRectangle(Graphics2D g, int imageWidth, int imageHeight) {
