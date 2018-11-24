@@ -36,8 +36,8 @@ public class ImageCreator {
             int numberOfClasses = jsonExctractor.getClassNames().size();
 
 
-            drawBottomRectangle(g, imageWidth, imageHeight);
             drawStems(g, imageWidth, imageHeight);
+            drawBottomRectangle(g, imageWidth, imageHeight);
             drawFlowers(g, imageWidth, imageHeight, numberOfClasses);
             drawStrings(g, imageWidth, imageHeight, numberOfClasses);
 
@@ -70,6 +70,7 @@ public class ImageCreator {
     }
 
     protected void drawEllipses(Graphics2D g, int imageWidth, int imageHeight) {
+        g.setColor(new Color(31, 75, 37));
         int stemWidthChange = imageWidth / 4;
         // Draw the ellipses in stems
         int widthChange = imageWidth / 60;
@@ -96,6 +97,7 @@ public class ImageCreator {
         switch (numberOfClasses) {
             case 1:
                 // TOP VERTICAL LINE (for the 4 stems)
+
                 g.drawLine(imageWidth / 8 + stemWidth / 2, (int) (imageHeight / (2.5) - lineLength), imageWidth / 8 + stemWidth / 2, (int) (imageHeight / (2.5)));
                 g.drawLine(stemWidthChange + (imageWidth / 8 + stemWidth / 2), (int) (imageHeight / (2.5) - lineLength), stemWidthChange + (imageWidth / 8 + stemWidth / 2), (int) (imageHeight / (2.5)));
                 g.drawLine(2 * stemWidthChange + (imageWidth / 8 + stemWidth / 2), (int) (imageHeight / (2.5) - lineLength), 2 * stemWidthChange + (imageWidth / 8 + stemWidth / 2), (int) (imageHeight / (2.5)));
@@ -221,6 +223,7 @@ public class ImageCreator {
                 // DRAW TOP VERTICAL CIRCLE
                 // First Circle
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -228,18 +231,21 @@ public class ImageCreator {
 
                 // Second Circle
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
 
                 // Third circle
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
 
                 // Fourth circle
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -251,21 +257,25 @@ public class ImageCreator {
                 // DRAW TOP LEFT CIRCLES
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -273,21 +283,25 @@ public class ImageCreator {
                 // DRAW TOP RIGHT CIRCLES
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -299,21 +313,25 @@ public class ImageCreator {
                 // DRAW TOP LEFT CIRCLE
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -321,24 +339,28 @@ public class ImageCreator {
                 // DRAW TOP VERTICAL CIRCLE
                 // First Circle
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
 
                 // Second Circle
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
 
                 // Third circle
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
 
                 // Fourth circle
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -346,21 +368,25 @@ public class ImageCreator {
                 // DRAW TOP RIGHT CIRCLES
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -373,21 +399,25 @@ public class ImageCreator {
                 // DRAW BOTTOM LEFT CIRCLES
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = (imageWidth / 8 - angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = stemWidthChange + (imageWidth / 8 - angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = 2 * stemWidthChange + (imageWidth / 8 - angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = 3 * stemWidthChange + (imageWidth / 8 - angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -395,21 +425,25 @@ public class ImageCreator {
                 // DRAW TOP LEFT CIRCLE
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -417,21 +451,25 @@ public class ImageCreator {
                 // DRAW TOP RIGHT CIRCLES
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -439,21 +477,25 @@ public class ImageCreator {
                 // DRAW BOTTOM RIGHT CIRCLE
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(3)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = (imageWidth / 8 + angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(3)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = stemWidthChange + (imageWidth / 8 + angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(3)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = 2 * stemWidthChange + (imageWidth / 8 + angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(3)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = 3 * stemWidthChange + (imageWidth / 8 + angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -465,21 +507,25 @@ public class ImageCreator {
                 // DRAW BOTTOM LEFT CIRCLES
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = (imageWidth / 8 - angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = stemWidthChange + (imageWidth / 8 - angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = 2 * stemWidthChange + (imageWidth / 8 - angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(0)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = 3 * stemWidthChange + (imageWidth / 8 - angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -487,21 +533,25 @@ public class ImageCreator {
                 // DRAW TOP LEFT CIRCLE
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(1)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 - angledLineDifference - stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -509,24 +559,28 @@ public class ImageCreator {
                 // DRAW TOP VERTICAL CIRCLE
                 // First Circle
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
 
                 // Second Circle
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
 
                 // Third circle
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
 
                 // Fourth circle
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(2)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = imageHeight / 5 + (100 - diameter);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -534,21 +588,25 @@ public class ImageCreator {
                 // DRAW TOP RIGHT CIRCLES
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(3)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(3)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(3)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 2 * stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(3)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 30 - diameter / 2);
                 positionWidth = 3 * stemWidthChange + imageWidth / 8 + angledLineDifference + stemWidth / 2 - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -556,21 +614,25 @@ public class ImageCreator {
                 // DRAW BOTTOM RIGHT CIRCLE
                 // First Flower
                 diameter = Integer.parseInt(jsonExctractor.getClassConsistencies().get(4)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = (imageWidth / 8 + angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Second Flower
                 diameter = Integer.parseInt(jsonExctractor.getConstantConsistencies().get(4)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = stemWidthChange + (imageWidth / 8 + angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Third Flower
                 diameter = Integer.parseInt(jsonExctractor.getVariableConsistencies().get(4)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = 2 * stemWidthChange + (imageWidth / 8 + angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
                 // Fourth Flower
                 diameter = Integer.parseInt(jsonExctractor.getMethodConsistencies().get(4)) + circleCorrection;
+                check_diameter(g, diameter - circleCorrection);
                 circleYPos = (int) (imageHeight / (2.5) - lineLength + 1.5 * angledLineDifference) - diameter / 2;
                 positionWidth = 3 * stemWidthChange + (imageWidth / 8 + angledLineDifference) - diameter / 2;
                 g.fillOval(positionWidth, circleYPos, diameter, diameter);
@@ -855,6 +917,7 @@ public class ImageCreator {
 
     protected void drawBottomRectangle(Graphics2D g, int imageWidth, int imageHeight) {
         // Draw the bottom rectangle
+        g.setColor(new Color(75, 66, 49));
         g.fillRect(0, imageHeight - 80, imageWidth, imageHeight);
     }
 
@@ -862,6 +925,7 @@ public class ImageCreator {
         // Draw stems
         int stemWidthChange = imageWidth / 4;
         int stemWidth = imageHeight / 96;
+        g.setColor(new Color(31, 75, 37));
         g.fillRect(imageWidth / 8, (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
         g.fillRect(stemWidthChange + (imageWidth / 8), (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
         g.fillRect(2 * stemWidthChange + (imageWidth / 8), (int) (imageHeight / (2.5)), stemWidth, (int) (imageHeight / (1.5)));
@@ -938,9 +1002,21 @@ public class ImageCreator {
         int stemWidthChange = imageWidth / 4;
         int stemWidth = imageHeight / 96;
         int height = imageHeight / 2 + imageHeight / 3;
-        g.setColor(new Color(182, 183, 168));
+        g.setColor(new Color(215, 216, 188));
         g.fillRect(stemWidthChange + (imageWidth / 7) - stemWidth - 5, height - 13, imageWidth / 4 - 25, imageHeight / 10);
+    }
 
-
+    protected void check_diameter(Graphics2D g, int diameter) {
+        if (diameter <= 20) {
+            g.setColor(new Color(33, 153, 1));
+        } else if (diameter <= 40 && diameter > 20) {
+            g.setColor(new Color(152, 151, 79));
+        } else if (diameter <= 60 && diameter > 40) {
+            g.setColor(new Color(151, 119, 69));
+        } else if (diameter <= 80 && diameter > 60) {
+            g.setColor(new Color(151, 66, 52));
+        } else if (diameter <= 100 && diameter > 80) {
+            g.setColor(new Color(153, 0, 0));
+        }
     }
 }
