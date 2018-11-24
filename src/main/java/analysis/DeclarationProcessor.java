@@ -58,6 +58,16 @@ public abstract class DeclarationProcessor {
             
         } catch (IOException e) {
             e.printStackTrace();
+            try {
+                String response = wordFinder.dataSourceToString();
+                if (response.startsWith("[{")) {
+                    inDictionary = true;
+                } else {
+                    inDictionary = false;
+                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
         return inDictionary;
     }
