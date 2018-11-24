@@ -961,11 +961,11 @@ public class ImageCreator {
         // ClassNames
         g.drawString("Class_name", imageWidth / 13, height);
         // CONSTANTS
-        g.drawString("CONSTANT_DEC", imageWidth / 3 - 45, height);
+        g.drawString("CONSTANT_DEC", imageWidth / 3 - 60, height);
         // globalAndLocalVariables
         g.drawString("global_and_local_variable", imageWidth / 2 + 45, height);
         // methodNames
-        g.drawString("method_name", imageWidth - imageWidth / 6 - stemWidth, height);
+        g.drawString("method_name", imageWidth - imageWidth / 6 - stemWidth - 20, height);
     }
 
     protected void drawClassLegend(Graphics2D g, int imageWidth, int imageHeight) {
