@@ -21,15 +21,30 @@ public abstract class DeclarationProcessor {
 
     public void processDeclaration(List<Declaration> declarations){
         String fileName = "";
+        int classIterator = 1;
+
         for (Declaration d : declarations){
+
+            CamelDeclarationIdentifier.currentClass = classIterator;
+            SnakeDeclarationIdentifier.currentClass = classIterator;
+
+            // initialize snakeJSON and camelJSON
+            initializeJSON(classIterator);
+
+            // populate values of JSON
             fileName = d.getFileName();
             checkClassName(d.getClassNames());
             checkMethodName(d.getMethodNames());
             checkStaticVariableName(d.getStaticVariableNames());
             checkVariableName(d.getVariableNames());
+
+            classIterator++;
         }
+        System.out.println(CamelDeclarationIdentifier.camelJSON);
     }
-    public boolean isInDictionary(String word) {
+
+
+    public static boolean isInDictionary(String word) {
 
         boolean inDictionary = false;
         DataProvider wordFinder = new HttpDictionaryDataProvider(word);
@@ -54,4 +69,6 @@ public abstract class DeclarationProcessor {
     public abstract void checkStaticVariableName(List<String> staticVariableNames);
 
     public abstract void checkVariableName(List<String> variableNames);
+
+    public abstract void initializeJSON(int classIterator);
 }

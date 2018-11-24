@@ -15,8 +15,8 @@ public class StyleViz {
 
     public static void main(String[] args) throws IOException {
 
-        PreProcessor preProcessor = new PreProcessor();
-        List<Declaration> declarations = preProcessor.process("");
+
+        List<Declaration> declarations = PreProcessor.process("");
 
         System.out.println("Pre-process complete.");
 
