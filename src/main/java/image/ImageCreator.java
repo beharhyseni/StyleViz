@@ -917,7 +917,7 @@ public class ImageCreator {
 
     protected void drawBottomRectangle(Graphics2D g, int imageWidth, int imageHeight) {
         // Draw the bottom rectangle
-        g.setColor(new Color(75, 66, 49));
+        g.setColor(new Color(50, 42, 31));
         g.fillRect(0, imageHeight - 80, imageWidth, imageHeight);
     }
 
@@ -961,7 +961,8 @@ public class ImageCreator {
         // ClassNames
         g.drawString("Class_name", imageWidth / 13, height);
         // CONSTANTS
-        g.drawString("CONSTANT_DEC", imageWidth / 3 - 60, height);
+       // g.drawString("CONSTANT_DEC", imageWidth / 3 - 60, height);
+        g.drawString("CONSTANT", imageWidth / 3, height);
         // globalAndLocalVariables
         g.drawString("global_and_local_variable", imageWidth / 2 + 45, height);
         // methodNames
@@ -977,7 +978,7 @@ public class ImageCreator {
         int stemWidth = imageHeight / 96;
         int height = imageHeight / 2 + imageHeight / 3 + 8;
 
-        g.drawString("Names of the visualized classes", stemWidthChange + (imageWidth / 7) + 30, height - 30);
+//        g.drawString("Names of the visualized classes", stemWidthChange + (imageWidth / 7) + 30, height - 30);
         g.setFont(new Font("Arial", Font.BOLD, 19));
         for (int i = 0; i < classNames.size(); i++) {
             g.drawString("Class " + (i + 1) + " : " + classNames.get(i), stemWidthChange + (imageWidth / 7) - stemWidth, height);
