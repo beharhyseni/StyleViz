@@ -72,9 +72,18 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
     private void updateJSON(String key, List<String> newValue, List<String> originalValue, int prevTypeCount) {
         JSONObject classValue = (JSONObject) camelJSON.get("Class"+Integer.toString(currentClass));
 
-        int actualNewValue = newValue.size() - prevTypeCount;
-        String percentage = Integer.toString(actualNewValue/originalValue.size() * 100);
-        classValue.put(key, percentage);
+        // if originalValue is empty, no names exist for this category
+        double actualNewValue = newValue.size() - prevTypeCount;
+        String percentString;
+        if (originalValue.size() == 0) {
+            percentString = "0";
+        }
+        else {
+            double decimalPercent = actualNewValue/originalValue.size() * 100;
+            int integerPercent = (int) decimalPercent;
+            percentString = Integer.toString(integerPercent);
+        }
+        classValue.put(key, percentString);
     }
 
     @Override
@@ -149,6 +158,35 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
         // TODO use goodStaticVariableNames badStaticVariableNames
         // TODO goodStaticVariableNames.size / staticVariableNames.size x 100 (no percentage) return string
         // TODO update JSON
+
+        for (String staticVariable: staticVariableNames) {
+
+            boolean isValidConstant = true;
+            for (int i = 0; i < staticVariable.length(); i++) {
+                if (!Character.isUpperCase(staticVariable.charAt(i)) && !Character.toString(staticVariable.charAt(i)).equals("_")) {
+                    isValidConstant = false;
+                }
+            }
+            if (!isValidConstant) {
+                badStaticVariableNames.add(staticVariable);
+            } else {
+                // static variable is verified to only consist of capitals and underscores
+                // split on underscores, any invalid word results in entire word being incorrect
+                boolean containsValidSubstrings = true;
+                for (String substring: staticVariable.split("_")) {
+                    if (!isInDictionary(substring)) {
+                        containsValidSubstrings = false;
+                    }
+                }
+                if (containsValidSubstrings) {
+                    goodStaticVariableNames.add(staticVariable);
+                } else {
+                    badStaticVariableNames.add(staticVariable);
+                }
+            }
+        }
+        updateJSON(STATIC_VARIABLE_KEY, goodStaticVariableNames, staticVariableNames, prevStaticVariableCount);
+        prevStaticVariableCount = goodStaticVariableNames.size();
     }
 
     @Override
