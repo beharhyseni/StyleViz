@@ -22,8 +22,8 @@ public class StyleViz {
 
         DeclarationProcessor camel = new CamelDeclarationIdentifier();
         camel.processDeclaration(declarations);
-        DeclarationProcessor snake = new SnakeDeclarationIdentifier();
-        snake.processDeclaration(declarations);
+//        DeclarationProcessor snake = new SnakeDeclarationIdentifier();
+//        snake.processDeclaration(declarations);
 
         System.out.println("Data analysis complete.");
 
