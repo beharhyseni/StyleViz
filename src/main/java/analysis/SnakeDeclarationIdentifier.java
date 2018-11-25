@@ -15,7 +15,10 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
 
     public static int currentClass;
 
-    private List<Declaration> declarations;
+    private int prevClassCount = 0;
+    private int prevMethodCount = 0;
+    private int prevStaticVariableCount = 0;
+    private int prevVariableCount = 0;
 
     private boolean snakeCase = true;
 
@@ -33,7 +36,8 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
     @Override
     public void initializeJSON(int classIterator) {
 
-        snakeJSON.put("Class"+Integer.toString(classIterator), "");
+        JSONObject emptyJSON = new JSONObject();
+        snakeJSON.put("Class"+Integer.toString(classIterator), emptyJSON);
         //SnakeDeclarationIdentifier.snakeJSON.put("Class"+Integer.toString(classIterator), "");
     }
 
@@ -43,6 +47,14 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
             percentage = (goodList.size() * 100.0f / (goodList.size() + badList.size()));
         }
         return percentage;
+    }
+
+    private void updateJSON(String key, List<String> newValue, List<String> originalValue, int prevTypeCount) {
+        JSONObject classValue = (JSONObject) snakeJSON.get("Class"+Integer.toString(currentClass));
+
+        int actualNewValue = newValue.size() - prevTypeCount;
+        String percentage = Integer.toString(actualNewValue/originalValue.size() * 100);
+        classValue.put(key, percentage);
     }
 
     @Override
@@ -69,17 +81,21 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
                     }
                 }
             } else {
-                    // name is not valid (percent will remain 0)
-                    badClassNames.add(name);
-                }
+                // name is not valid (percent will remain 0)
+                badClassNames.add(name);
             }
         }
+        updateJSON(NAME_KEY, goodClassNames, classNames, prevClassCount);
+        prevClassCount = goodClassNames.size();
+    }
 
     @Override
     public void checkMethodName(List<String> methodNames) {
         for (String name : methodNames) {
             checkSnakeCase(name, goodMethodNames, badMethodNames);
         }
+        updateJSON(METHOD_KEY, goodMethodNames, methodNames, prevMethodCount);
+        prevMethodCount = goodMethodNames.size();
     }
 
 
@@ -89,7 +105,8 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
         for (String name : variableNames) {
             checkSnakeCase(name, goodVariableNames, badVariableNames);
         }
-
+        updateJSON(VARIABLE_KEY, goodVariableNames, variableNames, prevMethodCount);
+        prevMethodCount = goodVariableNames.size();
     }
 
     public void checkSnakeCase(String name, List<String> goodList, List<String> badList) {
@@ -144,6 +161,8 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
                 }
             }
         }
+        updateJSON(STATIC_VARIABLE_KEY, goodStaticVariableNames, staticVariableNames, prevMethodCount);
+        prevMethodCount = goodStaticVariableNames.size();
     }
 
     private void addWordToList(String name, int indexOfLastWord, List<String> listOfSubWord, int i) {
