@@ -72,9 +72,10 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
     private void updateJSON(String key, List<String> newValue, List<String> originalValue, int prevTypeCount) {
         JSONObject classValue = (JSONObject) camelJSON.get("Class"+Integer.toString(currentClass));
 
-        // if originalValue is empty, no names exist for this category
         double actualNewValue = newValue.size() - prevTypeCount;
         String percentString;
+
+        // if originalValue is empty, no names exist for this category of names; this check helps avoid / by 0
         if (originalValue.size() == 0) {
             percentString = "0";
         }
@@ -155,9 +156,6 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
 
     @Override
     public void checkStaticVariableName(List<String> staticVariableNames) {
-        // TODO use goodStaticVariableNames badStaticVariableNames
-        // TODO goodStaticVariableNames.size / staticVariableNames.size x 100 (no percentage) return string
-        // TODO update JSON
 
         for (String staticVariable: staticVariableNames) {
 
@@ -191,11 +189,33 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
 
     @Override
     public void checkVariableName(List<String> variableNames) {
-        // TODO use goodVariableNames badVariableNames
-        // TODO goodVariableNames.size / variableNames.size x 100 (no percentage) return string
-        // TODO update JSON
 
-        // TODO: set SNAKE_CASE_KEY to false
+        for (String variable: variableNames) {
+
+            List<String> substringsOfName;
+
+            if (Character.isUpperCase(variable.charAt(0))) {
+                // variable starts with a capital, reject variable name
+                badVariableNames.add(variable);
+            } else {
+                // variable starts with a lowercase; check if one- or multi-worded
+                substringsOfName = getSubstrings(variable);
+
+                if (containsVerifiedSubstrings(substringsOfName)) {
+                    goodVariableNames.add(variable);
+                } else {
+                    goodVariableNames.add(variable);
+                }
+            }
+        }
+
+        updateJSON(VARIABLE_KEY, goodVariableNames, variableNames, prevVariableCount);
+        prevVariableCount = goodVariableNames.size();
+
+        // set SNAKE_CASE_KEY to false
+        JSONObject classValue = (JSONObject) camelJSON.get("Class"+Integer.toString(currentClass));
+        classValue.put(SNAKE_CASE_KEY, snakeCase);
+
     }
 
 }
