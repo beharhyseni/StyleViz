@@ -52,9 +52,19 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
     private void updateJSON(String key, List<String> newValue, List<String> originalValue, int prevTypeCount) {
         JSONObject classValue = (JSONObject) snakeJSON.get("Class"+Integer.toString(currentClass));
 
-        int actualNewValue = newValue.size() - prevTypeCount;
-        String percentage = Integer.toString(actualNewValue/originalValue.size() * 100);
-        classValue.put(key, percentage);
+        double actualNewValue = newValue.size() - prevTypeCount;
+        String percentString;
+
+        // if originalValue is empty, no names exist for this category of names; this check helps avoid / by 0
+        if (originalValue.size() == 0) {
+            percentString = "0";
+        }
+        else {
+            double decimalPercent = actualNewValue/originalValue.size() * 100;
+            int integerPercent = (int) decimalPercent;
+            percentString = Integer.toString(integerPercent);
+        }
+        classValue.put(key, percentString);
     }
 
     @Override
@@ -87,6 +97,7 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
         }
         updateJSON(NAME_KEY, goodClassNames, classNames, prevClassCount);
         prevClassCount = goodClassNames.size();
+
     }
 
     @Override
@@ -107,6 +118,9 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
         }
         updateJSON(VARIABLE_KEY, goodVariableNames, variableNames, prevMethodCount);
         prevMethodCount = goodVariableNames.size();
+
+        JSONObject classValue = (JSONObject) snakeJSON.get("Class"+Integer.toString(currentClass));
+        classValue.put(SNAKE_CASE_KEY, snakeCase);
     }
 
     public void checkSnakeCase(String name, List<String> goodList, List<String> badList) {
