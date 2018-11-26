@@ -68,8 +68,8 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
                 int lastCap = 0;
                 List<String> listOfSubWord = new ArrayList<>();
                 for (int i = 1; i < name.length(); i++) {
-                    if (Character.isUpperCase(name.charAt(i))) {
-                        String subWord = name.substring(lastCap, i);
+                    if (name.charAt(i) == '_') {
+                        String subWord = name.substring(lastCap, i-1);
                         listOfSubWord.add(subWord);
                         lastCap = i;
                     }
@@ -168,6 +168,7 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
     private void addWordToList(String name, int indexOfLastWord, List<String> listOfSubWord, int i) {
         String subWord = name.substring(indexOfLastWord, i - 1);
         listOfSubWord.add(subWord);
+        indexOfLastWord = i + 1;
     }
 
 }
