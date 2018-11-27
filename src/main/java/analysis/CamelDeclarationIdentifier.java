@@ -11,12 +11,10 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
     public static JSONObject camelJSON = new JSONObject();
 
     public static int currentClass;
-
     private int prevClassCount = 0;
     private int prevMethodCount = 0;
     private int prevStaticVariableCount = 0;
     private int prevVariableCount = 0;
-
     private boolean snakeCase = false;
 
     private List<String> goodClassNames = new ArrayList<>();
@@ -28,16 +26,13 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
     private List<String> goodVariableNames= new ArrayList<>();
     private List<String> badVariableNames= new ArrayList<>();
 
-
     public CamelDeclarationIdentifier(){ }
-
     @Override
     public void initializeJSON(int classIterator) {
 
         JSONObject emptyJSON = new JSONObject();
         camelJSON.put("Class"+Integer.toString(classIterator), emptyJSON);
     }
-
     private List<String> getSubstrings(String name) {
         List<String> substringsOfName = new ArrayList<>();
         int indexOfLastCap = 0;
@@ -56,7 +51,6 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
 
         return substringsOfName;
     }
-
     private boolean containsVerifiedSubstrings(List<String> substringsOfName) {
 
         boolean isValidName = true;
@@ -68,7 +62,6 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
         }
         return isValidName;
     }
-
     private void updateJSON(String key, List<String> newValue, List<String> originalValue, int prevTypeCount) {
         JSONObject classValue = (JSONObject) camelJSON.get("Class"+Integer.toString(currentClass));
 
@@ -86,10 +79,10 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
         }
         classValue.put(key, percentString);
     }
-
     @Override
     public void checkClassName(List<String> classNames) {
 
+        String className = "";
         for (String name: classNames) {
 
             List<String> substringsOfName;
@@ -103,6 +96,7 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
 
                 if (isValidName) {
                     goodClassNames.add(name);
+                    className = name;
                 } else {
                     badClassNames.add(name);
                 }
@@ -111,11 +105,15 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
                 badClassNames.add(name);
             }
         }
+
+        // TODO: update JSON to include class name
+        JSONObject classValue = (JSONObject) camelJSON.get("Class"+Integer.toString(currentClass));
+        classValue.put(NAME_KEY, className);
+
         // find right class in JSON and insert name key and percentage
-        updateJSON(NAME_KEY, goodClassNames, classNames, prevClassCount);
+        updateJSON(CLASS_KEY, goodClassNames, classNames, prevClassCount);
         prevClassCount = goodClassNames.size();
     }
-
     @Override
     public void checkMethodName(List<String> methodNames) {
 
@@ -153,7 +151,6 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
         updateJSON(METHOD_KEY, goodMethodNames, methodNames, prevMethodCount);
         prevMethodCount = goodMethodNames.size();
     }
-
     @Override
     public void checkStaticVariableName(List<String> staticVariableNames) {
 
@@ -186,7 +183,6 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
         updateJSON(STATIC_VARIABLE_KEY, goodStaticVariableNames, staticVariableNames, prevStaticVariableCount);
         prevStaticVariableCount = goodStaticVariableNames.size();
     }
-
     @Override
     public void checkVariableName(List<String> variableNames) {
 
@@ -217,5 +213,4 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
         classValue.put(SNAKE_CASE_KEY, snakeCase);
 
     }
-
 }
