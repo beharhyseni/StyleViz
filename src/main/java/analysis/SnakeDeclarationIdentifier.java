@@ -22,14 +22,14 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
 
     private boolean snakeCase = true;
 
-    private List<String> goodClassNames;
-    private List<String> badClassNames;
-    private List<String> goodMethodNames;
-    private List<String> badMethodNames;
-    private List<String> goodStaticVariableNames;
-    private List<String> badStaticVariableNames;
-    private List<String> goodVariableNames;
-    private List<String> badVariableNames;
+    private List<String> goodClassNames = new ArrayList<>();
+    private List<String> badClassNames = new ArrayList<>();
+    private List<String> goodMethodNames = new ArrayList<>();
+    private List<String> badMethodNames = new ArrayList<>();
+    private List<String> goodStaticVariableNames = new ArrayList<>();
+    private List<String> badStaticVariableNames = new ArrayList<>();
+    private List<String> goodVariableNames = new ArrayList<>();
+    private List<String> badVariableNames = new ArrayList<>();
 
     public SnakeDeclarationIdentifier() { }
 
@@ -38,15 +38,37 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
 
         JSONObject emptyJSON = new JSONObject();
         snakeJSON.put("Class"+Integer.toString(classIterator), emptyJSON);
-        //SnakeDeclarationIdentifier.snakeJSON.put("Class"+Integer.toString(classIterator), "");
     }
 
-    public float returnConsistency(List<String> goodList, List<String> badList) {
-        float percentage = 0;
-        if ((goodList.size() + badList.size()) != 0) {
-            percentage = (goodList.size() * 100.0f / (goodList.size() + badList.size()));
+    private List<String> getSubstrings(String name) {
+        List<String> substringsOfName = new ArrayList<>();
+        int indexOfLastCap = 0;
+        // populate substringsOfName with k-1 substrings of class name with k total substrings
+        for (int i=1; i<name.length(); i++) {
+            if ((name.charAt(i) == '_')) {
+                String subWord = name.substring(indexOfLastCap, i);
+                substringsOfName.add(subWord);
+                indexOfLastCap = i;
+            }
         }
-        return percentage;
+        // add kth substring to substringsOfName
+        String lastChar = Character.toString(name.charAt(name.length()-1));
+        String lastSubstring = name.substring(indexOfLastCap, name.length()-1).concat(lastChar);
+        substringsOfName.add(lastSubstring);
+
+        return substringsOfName;
+    }
+
+    private boolean containsVerifiedSubstrings(List<String> substringsOfName) {
+
+        boolean isValidName = true;
+
+        for (String substring: substringsOfName) {
+            if (!DeclarationProcessor.isInDictionary(substring)) {
+                isValidName = false;
+            }
+        }
+        return isValidName;
     }
 
     private void updateJSON(String key, List<String> newValue, List<String> originalValue, int prevTypeCount) {
@@ -69,58 +91,100 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
 
     @Override
     public void checkClassName(List<String> classNames) {
+
         for (String name: classNames) {
+
+            List<String> substringsOfName;
+            boolean isValidName;
+
             if (Character.isUpperCase(name.charAt(0))) {
-                // valid class name
-                // check if one word (split on capital letters)
-                // if one word, call DataProvider
-                // if >1 word, call DataProvider on each word
-                int lastCap = 0;
-                List<String> listOfSubWord = new ArrayList<>();
-                for (int i = 1; i < name.length(); i++) {
-                    if (name.charAt(i) == '_') {
-                        String subWord = name.substring(lastCap, i-1);
-                        listOfSubWord.add(subWord);
-                        lastCap = i;
-                    }
-                }
-                if (listOfSubWord.size() != 0) {
-                    for (String word : listOfSubWord) {
-                        addToGoodBadList(word, goodClassNames, badClassNames);
-                        // call dataProvider on word
-                    }
+
+                substringsOfName = getSubstrings(name);
+                // loop through and check each substring
+                isValidName = containsVerifiedSubstrings(substringsOfName);
+
+                if (isValidName) {
+                    goodClassNames.add(name);
+                } else {
+                    badClassNames.add(name);
                 }
             } else {
-                // name is not valid (percent will remain 0)
+                // name is not valid because doesn't start with a capital
                 badClassNames.add(name);
             }
         }
+        // find right class in JSON and insert name key and percentage
         updateJSON(NAME_KEY, goodClassNames, classNames, prevClassCount);
         prevClassCount = goodClassNames.size();
-
     }
 
     @Override
     public void checkMethodName(List<String> methodNames) {
-        for (String name : methodNames) {
-            checkSnakeCase(name, goodMethodNames, badMethodNames);
+
+        boolean constructorIncluded = false;
+
+        for (String method: methodNames) {
+
+            List<String> substringsOfName;
+
+            // check if constructor has been accounted for
+            if (Character.isUpperCase(method.charAt(0))) {
+                if (!constructorIncluded) {
+                    for (String className: goodClassNames) {
+                        if (className.equals(method)) {
+                            // constructor has been verified to equal name of corresponding class
+                            goodMethodNames.add(method);
+                            constructorIncluded = true;
+                        }
+                    }
+                } else {
+                    // method is not a constructor but starts with a capital = bad
+                    badMethodNames.add(method);
+                }
+            } else {
+                // method starts with a lowercase; check if one- or multi-worded
+                substringsOfName = getSubstrings(method);
+
+                if (containsVerifiedSubstrings(substringsOfName)) {
+                    goodMethodNames.add(method);
+                } else {
+                    badMethodNames.add(method);
+                }
+            }
         }
         updateJSON(METHOD_KEY, goodMethodNames, methodNames, prevMethodCount);
         prevMethodCount = goodMethodNames.size();
     }
 
-
-
     @Override
     public void checkVariableName(List<String> variableNames) {
-        for (String name : variableNames) {
-            checkSnakeCase(name, goodVariableNames, badVariableNames);
+
+        for (String variable: variableNames) {
+
+            List<String> substringsOfName;
+
+            if (Character.isUpperCase(variable.charAt(0))) {
+                // variable starts with a capital, reject variable name
+                badVariableNames.add(variable);
+            } else {
+                // variable starts with a lowercase; check if one- or multi-worded
+                substringsOfName = getSubstrings(variable);
+
+                if (containsVerifiedSubstrings(substringsOfName)) {
+                    goodVariableNames.add(variable);
+                } else {
+                    goodVariableNames.add(variable);
+                }
+            }
         }
-        updateJSON(VARIABLE_KEY, goodVariableNames, variableNames, prevMethodCount);
-        prevMethodCount = goodVariableNames.size();
+
+        updateJSON(VARIABLE_KEY, goodVariableNames, variableNames, prevVariableCount);
+        prevVariableCount = goodVariableNames.size();
+
 
         JSONObject classValue = (JSONObject) snakeJSON.get("Class"+Integer.toString(currentClass));
         classValue.put(SNAKE_CASE_KEY, snakeCase);
+
     }
 
     public void checkSnakeCase(String name, List<String> goodList, List<String> badList) {
@@ -153,36 +217,45 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
         }
     }
 
-    @Override
-    public void checkStaticVariableName(List<String> staticVariableNames) {
-        for (String name : staticVariableNames) {
-            if (Character.isUpperCase(name.charAt(0))) {
-                int indexOfLastWord = 0;
-                List<String> listOfSubWord = new ArrayList<>();
-                for (int i = 1; i < name.length(); i++) {
-                    if (Character.isLowerCase(name.charAt(i))) {
-                        badStaticVariableNames.add(name);
-                    } else {
-                        if (name.charAt(i) == '_') {
-                            addWordToList(name, indexOfLastWord, listOfSubWord, i);
-                        }
-                    }
-                }
-                if (listOfSubWord.size() != 0) {
-                    for (String word : listOfSubWord) {
-                        addToGoodBadList(word, goodStaticVariableNames, badStaticVariableNames);
-                    }
-                }
-            }
-        }
-        updateJSON(STATIC_VARIABLE_KEY, goodStaticVariableNames, staticVariableNames, prevMethodCount);
-        prevMethodCount = goodStaticVariableNames.size();
-    }
-
     private void addWordToList(String name, int indexOfLastWord, List<String> listOfSubWord, int i) {
         String subWord = name.substring(indexOfLastWord, i - 1);
         listOfSubWord.add(subWord);
         indexOfLastWord = i + 1;
     }
+
+    @Override
+    public void checkStaticVariableName(List<String> staticVariableNames) {
+
+        for (String staticVariable: staticVariableNames) {
+
+            boolean isValidConstant = true;
+            for (int i = 0; i < staticVariable.length(); i++) {
+                if (!Character.isUpperCase(staticVariable.charAt(i)) && !Character.toString(staticVariable.charAt(i)).equals("_")) {
+                    isValidConstant = false;
+                }
+            }
+            if (!isValidConstant) {
+                badStaticVariableNames.add(staticVariable);
+            } else {
+                // static variable is verified to only consist of capitals and underscores
+                // split on underscores, any invalid word results in entire word being incorrect
+                boolean containsValidSubstrings = true;
+                for (String substring: staticVariable.split("_")) {
+                    if (!isInDictionary(substring)) {
+                        containsValidSubstrings = false;
+                    }
+                }
+                if (containsValidSubstrings) {
+                    goodStaticVariableNames.add(staticVariable);
+                } else {
+                    badStaticVariableNames.add(staticVariable);
+                }
+            }
+        }
+        updateJSON(STATIC_VARIABLE_KEY, goodStaticVariableNames, staticVariableNames, prevStaticVariableCount);
+        prevStaticVariableCount = goodStaticVariableNames.size();
+    }
+
+
 
 }
