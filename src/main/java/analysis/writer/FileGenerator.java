@@ -18,7 +18,7 @@ public class FileGenerator {
 
     public FileGenerator() {};
 
-    public void writeToFiles(JSONObject jsonObject, String fileNameCount){
+    private void writeToFiles(JSONObject jsonObject, String fileNameCount){
 
         String fileName;
 

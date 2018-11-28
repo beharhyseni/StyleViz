@@ -70,7 +70,7 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
 
         // if originalValue is empty, no names exist for this category of names; this check helps avoid / by 0
         if (originalValue.size() == 0) {
-            percentString = "0";
+            percentString = "100";
         }
         else {
             double decimalPercent = actualNewValue/originalValue.size() * 100;
