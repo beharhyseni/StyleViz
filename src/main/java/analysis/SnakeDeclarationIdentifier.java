@@ -115,7 +115,7 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
                 badClassNames.add(name);
             }
         }
-        JSONObject classValue = (JSONObject) camelJSON.get("Class"+Integer.toString(currentClass));
+        JSONObject classValue = (JSONObject) snakeJSON.get("Class"+Integer.toString(currentClass));
         classValue.put(NAME_KEY, className);
 
         // find right class in JSON and insert name key and percentage
