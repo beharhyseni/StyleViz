@@ -92,6 +92,7 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
     @Override
     public void checkClassName(List<String> classNames) {
 
+        String className = "";
         for (String name: classNames) {
 
             List<String> substringsOfName;
@@ -105,6 +106,7 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
 
                 if (isValidName) {
                     goodClassNames.add(name);
+                    className = name;
                 } else {
                     badClassNames.add(name);
                 }
@@ -113,8 +115,11 @@ public class SnakeDeclarationIdentifier extends DeclarationProcessor {
                 badClassNames.add(name);
             }
         }
+        JSONObject classValue = (JSONObject) camelJSON.get("Class"+Integer.toString(currentClass));
+        classValue.put(NAME_KEY, className);
+
         // find right class in JSON and insert name key and percentage
-        updateJSON(NAME_KEY, goodClassNames, classNames, prevClassCount);
+        updateJSON(CLASS_KEY, goodClassNames, classNames, prevClassCount);
         prevClassCount = goodClassNames.size();
     }
 
