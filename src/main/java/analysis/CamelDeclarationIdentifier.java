@@ -84,29 +84,32 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
 
         String className = "";
         for (String name: classNames) {
+            // if class name contains an underscore, it is an invalid name
+            if (name.contains("_")) {
+                badClassNames.add(name);
+            } else {
+                List<String> substringsOfName;
+                boolean isValidName;
 
-            List<String> substringsOfName;
-            boolean isValidName;
+                if (Character.isUpperCase(name.charAt(0))) {
 
-            if (Character.isUpperCase(name.charAt(0))) {
+                    substringsOfName = getSubstrings(name);
+                    // loop through and check each substring
+                    isValidName = containsVerifiedSubstrings(substringsOfName);
 
-                substringsOfName = getSubstrings(name);
-                // loop through and check each substring
-                isValidName = containsVerifiedSubstrings(substringsOfName);
-
-                if (isValidName) {
-                    goodClassNames.add(name);
-                    className = name;
+                    if (isValidName) {
+                        goodClassNames.add(name);
+                        className = name;
+                    } else {
+                        badClassNames.add(name);
+                    }
                 } else {
+                    // name is not valid because doesn't start with a capital
                     badClassNames.add(name);
                 }
-            } else {
-                // name is not valid because doesn't start with a capital
-                badClassNames.add(name);
             }
         }
-
-        // TODO: update JSON to include class name
+        // add class name field to JSON
         JSONObject classValue = (JSONObject) camelJSON.get("Class"+Integer.toString(currentClass));
         classValue.put(NAME_KEY, className);
 
@@ -120,33 +123,38 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
         boolean constructorIncluded = false;
 
         for (String method: methodNames) {
+            // if method name contains an underscore, it is an invalid name
+            if (method.contains("_")) {
+                badMethodNames.add(method);
+            } else {
+                List<String> substringsOfName;
 
-            List<String> substringsOfName;
-
-            // check if constructor has been accounted for
-            if (Character.isUpperCase(method.charAt(0))) {
-                if (!constructorIncluded) {
-                    for (String className: goodClassNames) {
-                        if (className.equals(method)) {
-                            // constructor has been verified to equal name of corresponding class
-                            goodMethodNames.add(method);
-                            constructorIncluded = true;
+                // check if constructor has been accounted for
+                if (Character.isUpperCase(method.charAt(0))) {
+                    if (!constructorIncluded) {
+                        for (String className: goodClassNames) {
+                            if (className.equals(method)) {
+                                // constructor has been verified to equal name of corresponding class
+                                goodMethodNames.add(method);
+                                constructorIncluded = true;
+                            }
                         }
+                    } else {
+                        // method is not a constructor but starts with a capital = bad
+                        badMethodNames.add(method);
                     }
                 } else {
-                    // method is not a constructor but starts with a capital = bad
-                    badMethodNames.add(method);
-                }
-            } else {
-                // method starts with a lowercase; check if one- or multi-worded
-                substringsOfName = getSubstrings(method);
+                    // method starts with a lowercase; check if one- or multi-worded
+                    substringsOfName = getSubstrings(method);
 
-                if (containsVerifiedSubstrings(substringsOfName)) {
-                    goodMethodNames.add(method);
-                } else {
-                    badMethodNames.add(method);
+                    if (containsVerifiedSubstrings(substringsOfName)) {
+                        goodMethodNames.add(method);
+                    } else {
+                        badMethodNames.add(method);
+                    }
                 }
             }
+
         }
         updateJSON(METHOD_KEY, goodMethodNames, methodNames, prevMethodCount);
         prevMethodCount = goodMethodNames.size();
@@ -155,28 +163,33 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
     public void checkStaticVariableName(List<String> staticVariableNames) {
 
         for (String staticVariable: staticVariableNames) {
-
-            boolean isValidConstant = true;
-            for (int i = 0; i < staticVariable.length(); i++) {
-                if (!Character.isUpperCase(staticVariable.charAt(i)) && !Character.toString(staticVariable.charAt(i)).equals("_")) {
-                    isValidConstant = false;
-                }
-            }
-            if (!isValidConstant) {
+            // if static variable name contains an underscore, is an invalid name
+            if (staticVariable.contains("_")) {
                 badStaticVariableNames.add(staticVariable);
             } else {
-                // static variable is verified to only consist of capitals and underscores
-                // split on underscores, any invalid word results in entire word being incorrect
-                boolean containsValidSubstrings = true;
-                for (String substring: staticVariable.split("_")) {
-                    if (!isInDictionary(substring)) {
-                        containsValidSubstrings = false;
+
+                boolean isValidConstant = true;
+                for (int i = 0; i < staticVariable.length(); i++) {
+                    if (!Character.isUpperCase(staticVariable.charAt(i)) && !Character.toString(staticVariable.charAt(i)).equals("_")) {
+                        isValidConstant = false;
                     }
                 }
-                if (containsValidSubstrings) {
-                    goodStaticVariableNames.add(staticVariable);
-                } else {
+                if (!isValidConstant) {
                     badStaticVariableNames.add(staticVariable);
+                } else {
+                    // static variable is verified to only consist of capitals and underscores
+                    // split on underscores, any invalid word results in entire word being incorrect
+                    boolean containsValidSubstrings = true;
+                    for (String substring: staticVariable.split("_")) {
+                        if (!isInDictionary(substring)) {
+                            containsValidSubstrings = false;
+                        }
+                    }
+                    if (containsValidSubstrings) {
+                        goodStaticVariableNames.add(staticVariable);
+                    } else {
+                        badStaticVariableNames.add(staticVariable);
+                    }
                 }
             }
         }
@@ -187,20 +200,25 @@ public class CamelDeclarationIdentifier extends DeclarationProcessor {
     public void checkVariableName(List<String> variableNames) {
 
         for (String variable: variableNames) {
-
-            List<String> substringsOfName;
-
-            if (Character.isUpperCase(variable.charAt(0))) {
-                // variable starts with a capital, reject variable name
+            // if variable name contains underscore, is an invalid name
+            if (variable.contains("_")) {
                 badVariableNames.add(variable);
             } else {
-                // variable starts with a lowercase; check if one- or multi-worded
-                substringsOfName = getSubstrings(variable);
 
-                if (containsVerifiedSubstrings(substringsOfName)) {
-                    goodVariableNames.add(variable);
+                List<String> substringsOfName;
+
+                if (Character.isUpperCase(variable.charAt(0))) {
+                    // variable starts with a capital, reject variable name
+                    badVariableNames.add(variable);
                 } else {
-                    goodVariableNames.add(variable);
+                    // variable starts with a lowercase; check if one- or multi-worded
+                    substringsOfName = getSubstrings(variable);
+
+                    if (containsVerifiedSubstrings(substringsOfName)) {
+                        goodVariableNames.add(variable);
+                    } else {
+                        goodVariableNames.add(variable);
+                    }
                 }
             }
         }
